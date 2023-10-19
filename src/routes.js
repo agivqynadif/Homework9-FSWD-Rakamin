@@ -145,7 +145,7 @@ router.get("/movies/paginate", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/movies/:id", async (req, res) => {
+router.get("/movies/:id", verifyToken, async (req, res) => {
   const moviesId = req.params.id;
   try {
     const results = await pool.query("SELECT * FROM movies WHERE id = $1", [moviesId]);
@@ -156,7 +156,7 @@ router.get("/movies/:id", async (req, res) => {
   }
 });
 
-router.get("/users/paginate", async (req, res) => {
+router.get("/users/paginate", verifyToken, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
 
@@ -196,7 +196,7 @@ router.post("/movies", async (req, res) => {
   }
 });
 
-router.put("/movies/:id", async (req, res) => {
+router.put("/movies/:id", verifyToken, async (req, res) => {
   const movieId = req.params.id;
   const { title, genres, year } = req.body;
 
@@ -225,7 +225,7 @@ router.put("/movies/:id", async (req, res) => {
   }
 });
 
-router.delete("/movies/:id", async (req, res) => {
+router.delete("/movies/:id", verifyToken, async (req, res) => {
   const movieId = req.params.id;
 
   const deleteQuery = `
